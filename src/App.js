@@ -4,15 +4,17 @@ import { List } from "./components/List";
 import { Pagination } from "./components/Pagination";
 import { SortFilterPanel } from "./components/SortFilterPanel";
 import storage from "./db";
+import uuid from 'react-native-uuid';
 
 function App() {
   const [items, setItems] = useState(storage)
-  const createId = items.length + 1;
-
+  const date1 = new Date()
+  const date2 = new Date()
+  console.log(date1, date2);
   const handleAddItem = (e, name) => {
     e.preventDefault();
     const newItem = {
-      id: createId,
+      id: uuid.v4(),
       name: name,
       done: false,
       date: "10/11/22"
@@ -36,7 +38,7 @@ function App() {
     const cashItems = items.map(item => {
       if(item.id === id){
         item.name = name
-      }
+      }      
     })
     setItems(cashItems)
   }
