@@ -8,9 +8,9 @@ import uuid from 'react-native-uuid';
 
 function App() {
   const [items, setItems] = useState(storage)
-  const date1 = new Date()
-  const date2 = new Date()
-  console.log(date1, date2);
+  const [filteredItems, setfilteredItems] = useState(items);
+  const [itemsOnPage, setItemsOnPage] = useState(items.slice(0, 5));
+  
   const handleAddItem = (e, name) => {
     e.preventDefault();
     const newItem = {
@@ -23,13 +23,34 @@ function App() {
     setItems([...items, newItem])
   }
 
-  const hanleFilter = (e, ) => {
-
+  const handleFilteredItems = (typeFilter='all') => {
+    switch(typeFilter) {
+      case 'all':
+        setfilteredItems(items)
+        break;
+      case 'done':
+        setfilteredItems(items.filter(item => item.done))
+        break;
+      case 'undone':
+        setfilteredItems(items.filter(item => !item.done))
+        break;
+      default:
+        setfilteredItems(items)
+        break;
+    }
+    setItemsOnPage(filteredItems.slice(0, 5))
   }
 
   const handleDeleteItem = (id) => {
-    const updateStorage = items.filter(item => item.id !== id)
-    setItems(updateStorage)
+    console.log(id);
+    console.log(items[0].id);
+    const updateStorageItems = items.filter(item => item.id != id)
+    const updateFilteredItems = filteredItems.filter(item => item.id != id)
+    const updateShowItems = itemsOnPage.filter(item => item.id != id)
+    
+    setItems(updateStorageItems)
+    setfilteredItems(updateFilteredItems)
+    setItemsOnPage(updateShowItems)
   }
 
   const handleEditItem = (e, name, id) => {
@@ -43,13 +64,17 @@ function App() {
     setItems(cashItems)
   }
 
+  const handlePage = (number=0) => {
+    setItemsOnPage(filteredItems.slice(number*5, (number+1)*5))
+  }
+
   return (    
     <div>
       <h1 style={{alignSelf: "center"}}>ToDo</h1>
       <AddItem handleAddItem={handleAddItem}/>
-      <SortFilterPanel hanleFilter = {hanleFilter}/>
-      <List items={items} handleDeleteItem = {handleDeleteItem} handleEditItem={handleEditItem}/>
-      <Pagination />
+      <SortFilterPanel handleFilter={handleFilteredItems}/>
+      <List items={itemsOnPage} handleDeleteItem = {handleDeleteItem} handleEditItem={handleEditItem}/>
+      <Pagination items={filteredItems} handlePage={handlePage}/>
     </div>
   );
 }

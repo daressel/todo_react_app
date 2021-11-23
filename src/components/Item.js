@@ -14,7 +14,6 @@ const Item = ({item, handleDeleteItem, handleEditItem}) => {
       inputField ? setInputField(false) : setInputField(true)
     }
   }
-
   return ( 
     <div className="item-details" onClick={handleClick}>
       <div className="status">

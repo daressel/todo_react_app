@@ -1,10 +1,10 @@
-export const SortFilterPanel = () => {
+export const SortFilterPanel = ({handleFilter}) => {
   return(
     <div className="sort-filter-panel">
       <div className="filters">
-        <span className="filter">All</span>
-        <span className="filter">Done</span>
-        <span className="filter">Undone</span>
+        <span className="filter" onClick={() => handleFilter('all')}>All</span>
+        <span className="filter" onClick={() => handleFilter('done')}>Done</span>
+        <span className="filter" onClick={() => handleFilter('undone')}>Undone</span>
       </div>
       <div className="sort">
         Sort by Date
