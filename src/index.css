@@ -74,6 +74,11 @@ li{
   justify-content: space-between;
 }
 
+.edit-item,
+.edit-item-form{
+  display: inline;
+}
+
 .status > input[type="checkbox"] + label::after{
   content: "\f057";
   font-family: "Font Awesome 5 Free";

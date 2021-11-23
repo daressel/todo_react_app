@@ -21,12 +21,19 @@ const Item = ({item, handleDeleteItem, handleEditItem}) => {
         <input
           className="check-box"
           type="checkbox"
-          id={'check-' + item.id}
+          id={'check-' + item.id.substr(0,8)}
           checked={status}
           onChange={() => setStatus(!status)}
         />
-        <label htmlFor={'check-' + item.id} ></label>
-        <span className="item-name">{item.name}</span>        
+        <label htmlFor={'check-' + item.id.substr(0,8)} ></label>
+        {!inputField && <span className="item-name">{item.name}</span>}
+        {inputField &&
+          <form className="edit-item-form" onSubmit={(e) => {handleEditItem(e, newName, item.id); setInputField(false)}}>
+            <div className="edit-item">
+              <input type="text" size="40" value={newName} onChange={changeText}></input>
+            </div>
+          </form>
+        }     
       </div>
       <div>
         <span>{item.date}</span>
@@ -34,13 +41,7 @@ const Item = ({item, handleDeleteItem, handleEditItem}) => {
           <i className="fas fa-trash"></i>
         </span>
       </div>
-      {inputField &&
-      <form className="add-item-form" onSubmit={(e) => {handleEditItem(e, newName, item.id); setInputField(false)}}>
-        <div className="edit-item">
-          <input type="text" size="40" value={newName} onChange={changeText}></input>
-        </div>
-      </form>
-      }
+      
     </div>
       
   );
